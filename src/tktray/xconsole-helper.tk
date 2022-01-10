@@ -1,0 +1,34 @@
+#!/usr/bin/env wish
+
+set xconsole [exec xdotool search --class xconsole]
+
+catch {load <sofile>} msg
+image create photo ico1 -file <icon>
+
+package require tktray 1.0
+
+
+wm withdraw .
+
+set state 1
+
+proc toggle {} {
+  global state xconsole
+
+  if {[catch {
+    if {$state} {
+      exec xdotool windowunmap $xconsole
+    } else {
+      exec xdotool windowmap $xconsole
+      exec xdotool windowactivate $xconsole
+    }
+  } err]} {
+    exit 1
+  }
+  set state [expr {1 - $state}]
+}
+
+::tktray::icon .myi -image ico1  -class WildIcon
+bind .myi <1> toggle
+toggle
+
