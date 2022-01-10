@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Build conspy
+#
+set -euf
+pkgname=conspy
+pkgver=1.16
+
+[ x"${BUILD_TYPE:-alpine}" != x"alpine" ] && exit 0
+pkgfile=$pkgname-alpine.bin.tar.gz
+
+if [ ! -f src/$pkgname/$pkgname-$pkgver.tar.gz ] ; then
+  echo "Missing pkg source"
+  exit 1
+fi
+
+build_dir=$(pwd)/tmp
+local_dir=/usr/local/pkgs/$pkgname-$pkgver
+root_dir=$build_dir/$pkgname-root
+
+tar -C $build_dir -zxf src/$pkgname/$pkgname-$pkgver.tar.gz
+
+(
+  cd $build_dir/$pkgname-$pkgver
+  gcc -O -s -static -o conspy conspy.c /usr/lib/libncursesw.a
+)
+tar -C $build_dir/$pkgname-$pkgver -zcf $pkgfile conspy
+echo $pkgfile >> artifacts.txt
+

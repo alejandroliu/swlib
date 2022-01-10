@@ -1,0 +1,3 @@
+https://flpsed.org/flpsed.html
+https://flpsed.org/flpsed-0.7.3.tar.gz
+https://git.flpsed.org/flpsed

@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Build csslh
+#
+set -euf
+
+[ x"${BUILD_TYPE:-alpine}" != x"alpine" ] && exit 0
+exename=csslh
+pkgfile=$exename-alpine.bin.tar.gz
+
+if [ ! -f src/$exename.c ] ; then
+  echo "Missing pkg source"
+  exit 1
+fi
+
+build_dir=$(pwd)/tmp
+gcc -O -s -static -o $build_dir/$exename src/$exename.c
+tar -C $build_dir -zcf $pkgfile $exename
+echo $pkgfile >> artifacts.txt
