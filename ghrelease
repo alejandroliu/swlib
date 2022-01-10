@@ -64,9 +64,9 @@ if [ x"$relid" = x"--purge" ] ; then
   if $github ; then
     gh release list | awk '$2 == "Pre-release" { print $1 }' | while read vtag
     do
-      echo gh release delete $vtag --yes || :
-      echo git tag -d $vtag || :
-      echo git push --delete origin $vtag || :
+      gh release delete $vtag --yes || :
+      git tag -d $vtag || :
+      git push --delete origin $vtag || :
     done
   else
     echo "You can only purge from github releases"
