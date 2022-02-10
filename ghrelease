@@ -5,8 +5,6 @@
 set -euf -o pipefail
 
 checks="wfscripts/checks"
-vformat='%s\n'
-vfile=VERSION
 
 rc=false
 github=false
@@ -116,7 +114,16 @@ if [ -z "$relnotes" ] ; then
   exit 4
 fi
 
+if [ -f "version.h" ] ; then
+  vfile="version.h"
+  vformat='const char version[] = "%s";\n'
+else
+  vformat='%s\n'
+  vfile=VERSION
+fi
+
 printf "$vformat" "$relid" > "$vfile"
+git add "$vfile"
 git commit -m "$relid" "$vfile"
 git tag -a "$relid" -m "$relid"
 git push

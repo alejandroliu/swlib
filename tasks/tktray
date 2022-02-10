@@ -30,7 +30,8 @@ tar -C $build_dir -zxf $tarball
   make DESTDIR=$root_dir install
   [ -d $root_dir/usr/bin ] && rmdir $root_dir/usr/bin || :
 
-  mkdir -p $root_dir$local_dir/{bin,pixmaps}
+  mkdir -p $root_dir$local_dir/bin
+  mkdir -p $root_dir$local_dir/pixmaps
 )
 icon=log-24x24.png
 cp -av src/$pkgname/$icon $root_dir$local_dir/pixmaps
