@@ -1,0 +1,52 @@
+name: create release artifacts
+on:
+  push:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    env:
+      ALPINELINUX_IMG: alpine:latest
+      VOIDLINUX_IMG: voidlinux/voidlinux-musl:latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: prepare
+        run: |
+          > artifacts.txt
+      - name: set-up alpine build environment
+        run: |
+          docker pull ${{ env.ALPINELINUX_IMG }}
+          docker run -d --name alpine -v "$(pwd)":/hostrepo -v /tmp:/tmp ${{env.ALPINELINUX_IMG }} /bin/sh -c 'sleep inf'
+          docker exec -t alpine /bin/sh /hostrepo/scripts/setup-alpine.sh
+      - name: setup-up voidlinux container
+        run: |
+          docker pull ${{ env.VOIDLINUX_IMG }}
+          docker run -d --name void -v "$(pwd)":/hostrepo -v /tmp:/tmp ${{ env.VOIDLINUX_IMG }} /bin/sh -c "sleep inf"
+          docker exec -t void /bin/sh /hostrepo/scripts/setup-void.sh
+      - name: compile voidlinux binaries
+        run: |
+          mkdir -p tmp
+          docker exec -t void /bin/sh -c 'cd /hostrepo ; env BUILD_TYPE=void run-parts tasks'
+          docker exec -t void rm -rf /hostrepo/tmp
+      - name: compile alpine binaries
+        run: |
+          mkdir -p tmp
+          docker exec -t alpine /bin/sh -c 'cd /hostrepo ; env BUILD_TYPE=alpine run-parts tasks'
+          docker exec -t alpine rm -rf /hostrepo/tmp
+      - name: clean-up docker containers
+        if: ${{ always() }}
+        run: |
+          docker stop alpine || :
+          docker rm alpine || :
+          docker stop void || :
+          docker rm void || :
+
+      - name: check artifacts
+        run: |
+          artifacts=$(cat artifacts.txt)
+          if [ -n "$artifacts" ] ; then
+            ls -lsh $artifacts
+          fi
