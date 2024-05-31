@@ -26,3 +26,15 @@ Software Library collection
 
 # notes
 
+Add: https://gitlab.archlinux.org/archlinux/packaging/packages/xpad/-/blob/main/PKGBUILD?ref_type=heads
+./autogen.sh
+./configure --prefix=/usr/local
+make
+make DESTDIR=$fakeroot install
+
+# Save all required libraries
+for j in $(ldd xpad | awk '{print $3}') ; do cp "$j" . ; done
+LD_LIBRARY_PATH=.... xpad
+
+
+

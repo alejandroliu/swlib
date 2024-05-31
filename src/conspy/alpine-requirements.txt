@@ -1,4 +1,0 @@
-ncurses-static
-ncurses-dev
-linux-lts-dev
-linux-headers

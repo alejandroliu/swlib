@@ -6,7 +6,7 @@
 #
 set -euf
 pkgname=svgbob
-pkgver=0.6.6
+pkgver=0.7.2
 
 [ x"${BUILD_TYPE:-void}" != x"void" ] && exit 0
 pkgfile=$pkgname-$pkgver-void.bin.tar.gz
@@ -25,8 +25,8 @@ tar -C $build_dir -zxf src/$pkgname/$pkgname-$pkgver.tar.gz
 (
   cd $build_dir/$pkgname-$pkgver
   mkdir -p $root_dir$local_dir
-
-  cargo fetch --locked
+  set -x
+  cargo fetch #--locked
   cargo build --frozen --release
   install -Dm0755 target/release/svgbob_cli "$root_dir$local_dir/bin/svgbob"
 )
