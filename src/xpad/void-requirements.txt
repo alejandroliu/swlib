@@ -1,0 +1,9 @@
+base-devel
+gtk+3-devel
+gtk+3-devel
+gtksourceview4-devel
+intltool
+libSM-devel
+libX11-devel
+libXtst-devel
+gettext-devel-tools

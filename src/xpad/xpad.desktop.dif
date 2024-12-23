@@ -1,0 +1,11 @@
+--- xpad.desktop.in-orig	2022-05-23 14:07:02.000000000 +0200
++++ xpad.desktop.in	2024-06-08 10:49:35.314763969 +0200
+@@ -6,7 +6,7 @@
+ Comment=Jot down notes for later
+ 
+ TryExec=xpad
+-Exec=xpad
++Exec=xpad --no-new
+ Terminal=false
+ Icon=xpad
+ 

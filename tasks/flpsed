@@ -26,6 +26,14 @@ tar -C $build_dir -zxf src/$pkgname/$pkgname-$pkgver.tar.gz
   ./configure --prefix=$local_dir
   make
   make DESTDIR=$root_dir install
+  # These need to be installed manually
+  for file in \
+	share/applications/flpsed.desktop \
+	share/icons/hicolor/256x256/apps/flpsed.svg \
+	share/icons/hicolor/scalable/apps/flpsed.png
+  do
+    install -D "$(basename "$file")" $root_dir$local_dir/$file
+  done
 )
 tar -C $root_dir  -zcf $pkgfile $(echo $local_dir | sed -e 's!^/*!!')
 echo $pkgfile >> artifacts.txt

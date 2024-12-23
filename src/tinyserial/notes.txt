@@ -1,0 +1,73 @@
+- Configure hot keys
+- switch to repeat 3 times to action
+
+
+Cables
+
+- RJ45 short blue (console adaptor)
+- RJ45 1.8/2.0m blue
+- USB2 or USB3 extension 50cm
+- USB-C hub for front port
+  - https://www.allekabels.nl/usb-hub/174/3789803/usb-hub-3-poorten.html
+
+- HDMI extension 1 meter white
+- ??RJ45 to DB9-female??
+- ??USB-C hub with PD and HDMI output?? for Seb
+
+CD   1. N/C
+RXD  2. Black (6)
+TXD  3. Yellow (3)
+DTR  4. Brown (2)
+GND  5. Green/Red (4/5)
+DSR  6. Orange (7)
+RTS  7. White (1)
+CTS  8. Blue (8)
+RI   9. N/C
+
+
+1 .. ______ RTS 7
+2 .. ______ DTR 4
+3 .. ______ TXD 3
+4 .. ______ GND 5
+5 .. ______ GND 5
+6 .. ______ RXD 2
+7 .. ______ DSR 6
+8 .. ______ CTS 8
+
+***
+
+CD   1. N/C
+RXD  2. Black (6)
+TXD  3. Yellow (3)
+DTR  4. Orange (7)
+GND  5. Green/Red (4/5)
+DSR  6. Brown (2)
+RTS  7. White (1)
+CTS  8. Blue (8)
+RI   9. N/C
+
+
+
+1 .. _BLUE___ CTS 8
+2 .. _ORANGE_ DSR 6
+3 .. _YELLOW_ TXD 3
+4 .. _GREEN__ GND 5
+5 .. _RED____ GND 5
+6 .. _BLACK__ RXD 2
+7 .. _BROWN__ DTR 4
+8 .. _WHITE__ RTS 7
+
+
+
+coherent_pool=1M
+8250.nr_uarts=1
+snd_bcm2835.enable_compat_alsa=0
+snd_bcm2835.enable_hdmi=1
+bcm2708_fb.fbwidth=1824
+bcm2708_fb.fbheight=984
+bcm2708_fb.fbswap=1
+vc_mem.mem_base=0x3ec00000 vc_mem.mem_size=0x40000000  modules=loop,squashfs,sd-mod,usb-storage quiet console=tty1
+
+
+hdmi_force_hotplug=1
+hdmi_drive=2
