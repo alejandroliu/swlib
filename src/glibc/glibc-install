@@ -1,0 +1,56 @@
+#!/bin/sh
+#
+# Run xbps-install on /glibc
+#
+set -euf
+(set -o pipefail 2>/dev/null) && set -o pipefail || :
+
+die() {
+  local rc=1
+  case "$1" in
+  -[0-9]*) rc=${1#-} ; shift ;;
+  esac
+  echo "$@" 1>&2
+  exit $rc
+}
+
+[ $(id -u) -ne 0 ] && die -10 "$(id -un): Permission denied"
+if [ $# -eq 0 ] ; then
+  cat 1>&2 <<-_EOF_
+	Usage: $0 [options]
+
+	Options:
+
+	* --remove : Remove packages
+	* --query : Query
+	* xbps-install options
+
+	_EOF_
+  exit 1
+fi
+
+export XBPS_ARCH=x86_64
+glibc_dir=/glibc
+repo=https://repo-default.voidlinux.org/current
+
+case "$1" in
+--remove)
+  shift
+  [ ! -d "$glibc_dir" ] && die -34 "$glibc_dir: not found"
+  exec xbps-remove -r "$glibc_dir" "$@"
+  exit 38
+  ;;
+--query)
+  shift
+  [ ! -d "$glibc_dir" ] && die -34 "$glibc_dir: not found"
+  exec xbps-query --repository="$repo" -r "$glibc_dir" "$@"
+  exit 45
+  ;;
+*)
+  if [ ! -d "$glibc_dir" ] ; then
+    mkdir -v "$glibc_dir"
+    xbps-install --repository="$repo" -r "$glibc_dir" -S base-voidstrap
+  fi
+  exec xbps-install --repository="$repo" -r "$glibc_dir" "$@"
+  exit 54
+esac
