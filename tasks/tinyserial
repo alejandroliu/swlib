@@ -21,4 +21,5 @@ root_dir=$build_dir/$pkgname-root
 )
 tar -C $root_dir  -zcf $pkgfile $(echo $local_dir | sed -e 's!^/*!!')
 echo $pkgfile >> artifacts.txt
+md5sum artifacts.txt
 
