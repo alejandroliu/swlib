@@ -17,10 +17,7 @@ apps="
   https://github.com/leifmariposa/geany-ctrl-tab-plugin
   https://github.com/leifmariposa/geany-switch-document-plugin
   https://github.com/TortugaLabs/geany-macro-recorder-plugin
-<<<<<<< HEAD
-=======
   https://github.com/TortugaLabs/geany-winsplit-plugin
->>>>>>> v2025.01-dev3
 "
 
 mkdir -pv "$root_dir/$pkgname-$pkgver$local_dir/lib/geany"
