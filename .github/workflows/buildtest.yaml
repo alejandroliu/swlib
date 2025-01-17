@@ -51,4 +51,16 @@ jobs:
           artifacts=$(cat artifacts.txt)
           if [ -n "$artifacts" ] ; then
             ls -lsh $artifacts
+            (
+              for i in $artifacts
+              do
+                ls -1sh "$i"
+                tar -ztvf "$i" | while read -r line
+                do
+                  echo "$i: $line"
+                done
+                echo ''
+              done
+            ) > contents.txt
+            cat contents.txt
           fi
