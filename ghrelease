@@ -144,7 +144,16 @@ done
 
 if [ $# -lt 1 ] ; then
   cat <<-_EOF_
-	Usage: $0 [options] version
+	Usage:
+
+	* $0 [options] version
+	  Create a new release or pre-release
+	* $0 --purge
+	  Purge interim pre-releases
+	* $0 --test
+	  Run tests
+	* $0 --delete tag
+	  Delete a release
 
 	Options:
 	* --rc|-t : create a release candidate (test release)
@@ -154,8 +163,6 @@ if [ $# -lt 1 ] ; then
 	* version : version tag
 	* -i [dir] : install $0 to current directory or [dir].
 
-	If version is --purge, it will delete all pre-releases.
-	If version is --test, it will run tests.
 	_EOF_
   gh release list
   exit 1
@@ -207,9 +214,9 @@ case "$relid" in
     fi
     gh release delete $rel --yes || rc=2
     git tag -d $rel || rc=3
-    git push --delete origin $re || rc=4
+    git push --delete origin $rel || rc=4
   done
-  exit 0
+  exit $rc
   ;;
 --test)
   if [ -x "$checks" ] ; then
