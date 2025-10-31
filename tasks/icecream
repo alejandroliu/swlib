@@ -22,7 +22,7 @@ root_dir=$build_dir/$pkgname-root
 mkdir -vp "$root_dir$(dirname "$local_dir")"
 cp -av "$srcpath" "$root_dir$local_dir"
 mkdir -vp "$root_dir$(dirname "$srcpath")"
-ln -sf "$local_dir" "$build_dir$srcpath"
+ln -sf "$local_dir" "$root_dir$srcpath"
 
 echo "========================== ICECREAM:DONE  ========================="
 tar -C $root_dir  -zcf $pkgfile usr
