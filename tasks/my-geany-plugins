@@ -20,7 +20,7 @@ apps="
   https://github.com/TortugaLabs/geany-winsplit-plugin
 "
 
-mkdir -pv "$root_dir/$pkgname-$pkgver$local_dir/lib/geany"
+mkdir -pv "$root_dir$local_dir/lib/geany"
 mkdir -pv "$build_dir/$pkgname-$pkgver"
 (
   cd $build_dir/$pkgname-$pkgver
@@ -30,15 +30,18 @@ mkdir -pv "$build_dir/$pkgname-$pkgver"
   for gitrepo in $apps
   do
     repodir=$(basename "$gitrepo")
-    git clone "$gitrepo" "$repodir"
+    [ -d "$repodir" ] || git clone "$gitrepo" "$repodir"
     (
       cd "$repodir" || exit 1
       make
-      ls -l "$root_dir$local_dir"
       make install BINDIR="$root_dir$local_dir"'/lib/geany/$(LIBRARY)'
+      #
     ) || exit 1
   done
+  mkdir -pv "$root_dir/usr/lib/geany"
+  ( cd "$root_dir/usr/lib/geany"
+    ln -sfv $(find ../../local -type f) . )
 )
-tar -C $root_dir  -zcf $pkgfile $(echo $local_dir | sed -e 's!^/*!!')
+(set -x ; tar -C $root_dir  -zcf $pkgfile usr)
 echo $pkgfile >> artifacts.txt
 
