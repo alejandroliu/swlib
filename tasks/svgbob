@@ -6,7 +6,7 @@
 #
 set -euf
 pkgname=svgbob
-pkgver=0.7.2
+pkgver=0.7.6
 
 [ x"${BUILD_TYPE:-void}" != x"void" ] && exit 0
 pkgfile=$pkgname-$pkgver-void.bin.tar.gz
