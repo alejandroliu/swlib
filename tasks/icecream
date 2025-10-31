@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Build tinyserial
+#
+set -euf
+pkgname=icecream
+pip install icecream
+
+#~ pkgver=20241228.local1
+
+#~ [ x"${BUILD_TYPE:-void}" != x"void" ] && exit 0
+#~ pkgfile=$pkgname-$pkgver-void.bin.tar.gz
+
+#~ build_dir=$(pwd)/tmp
+#~ local_dir=/usr/local/pkgs/$pkgname-$pkgver
+#~ root_dir=$build_dir/$pkgname-root
+
+#~ (
+  #~ cd src/$pkgname
+  #~ gcc -s -o glibc glibc.c
+  #~ mkdir -p $root_dir$local_dir/bin
+  #~ cp -av glibc $root_dir$local_dir/bin/glibc
+  #~ chmod +sx $root_dir$local_dir/bin/glibc
+  #~ cp -av glibc-install $root_dir$local_dir/bin/glibc-install
+  #~ chmod 755 $root_dir$local_dir/bin/glibc-install
+#~ )
+#~ tar -C $root_dir  -zcf $pkgfile $(echo $local_dir | sed -e 's!^/*!!')
+#~ echo $pkgfile >> artifacts.txt
+
