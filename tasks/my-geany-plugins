@@ -37,12 +37,14 @@ mkdir -pv "$build_dir/$pkgname-$pkgver"
       ls -l "$root_dir$local_dir"
       make install BINDIR="$root_dir$local_dir"'/lib/geany/$(LIBRARY)'
       mkdir -p "$root_dir/usr/lib/geany"
-      ( set -x ; cd "$root_dir/usr/lib/geany" && ln -s ../../local/pkgs/$pkgname-$pkgver/*.so . )
+      ( set -x ; cd "$root_dir/usr/lib/geany"
+	ls -l ../../local/pkgs/$pkgname-$pkgver/
+      )
       ls -l "/usr/lib/geany" || :
       #
     ) || exit 1
   done
 )
-tar -C $root_dir  -zcf $pkgfile $(echo $local_dir | sed -e 's!^/*!!')
+(set -x ; tar -C $root_dir  -zcf $pkgfile $(echo $local_dir | sed -e 's!^/*!!') )
 echo $pkgfile >> artifacts.txt
 

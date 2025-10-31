@@ -9,7 +9,7 @@ set -x
 
 
 echo -y | env XBPS_ARCH=x86_64-musl xbps-install -y -A python3-pip
-pip install icecream
+pip install --break-system-packages icecream
 pip show icecream
 python3 -c "import icecream,os; print(os.path.dirname(icecream.__file__))"
 python3 -c "import icecream; print(icecream.__version__)"
