@@ -4,7 +4,18 @@
 #
 set -euf
 pkgname=icecream
+echo "========================== ICECREAM  ========================="
+set -x
+
+
+xbps-install python3-pip
 pip install icecream
+pip show icecream
+python3 -c "import icecream,os; print(os.path.dirname(icecream.__file__))"
+python3 -c "import icecream; print(icecream.__version__)"
+
+echo "========================== ICECREAM  ========================="
+#~ pip install icecream
 
 #~ pkgver=20241228.local1
 
