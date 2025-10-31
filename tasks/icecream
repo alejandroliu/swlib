@@ -8,7 +8,7 @@ echo "========================== ICECREAM  ========================="
 set -x
 
 
-xbps-install python3-pip
+echo -y | env XBPS_ARCH=x86_64-musl xbps-install -y -A python3-pip
 pip install icecream
 pip show icecream
 python3 -c "import icecream,os; print(os.path.dirname(icecream.__file__))"
