@@ -36,5 +36,9 @@ make DESTDIR=$fakeroot install
 for j in $(ldd xpad | awk '{print $3}') ; do cp "$j" . ; done
 LD_LIBRARY_PATH=.... xpad
 
+# Release
+
+Just create a tag to release
+
 
 
