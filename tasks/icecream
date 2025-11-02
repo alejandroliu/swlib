@@ -12,7 +12,6 @@ echo -y | env XBPS_ARCH=x86_64-musl xbps-install -y -A python3-pip
 pip install --break-system-packages icecream
 pip show icecream
 srcpath=$(python3 -c "import icecream,os; print(os.path.dirname(icecream.__file__))")
-rm -rfv "$srcpath/__pycache__"
 pkgver=$(python3 -c "import icecream; print(icecream.__version__)")
 pkgfile=$pkgname-$pkgver-void.bin.tar.gz
 
@@ -20,6 +19,7 @@ build_dir=$(pwd)/tmp
 local_dir=/usr/local/pkgs/$pkgname-$pkgver
 root_dir=$build_dir/$pkgname-root
 
+rm -rfv "$srcpath/__pycache__"
 mkdir -vp "$root_dir$(dirname "$local_dir")"
 cp -av "$srcpath" "$root_dir$local_dir"
 mkdir -vp "$root_dir$(dirname "$srcpath")"
